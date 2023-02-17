@@ -19,6 +19,7 @@ public class ChatServiceImpl implements ChatService{
 	@Autowired
 	private ChatDao chatDao;
 	
+	
 	@Override
 	public int insertChat(Chat c) {
 		return chatDao.insertChat(c, sqlSession);
@@ -35,8 +36,19 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public int insertChatDetail(int cno) {
-		return chatDao.insertChatDetail(cno, sqlSession);
+	public int insertFirstChat(Chat c) {
+		return chatDao.insertFirstChat(c, sqlSession);
 	}
+
+	@Override
+	public int selectChatDetailStatus(Chat c) {
+		return chatDao.selectChatDetailStatus(c, sqlSession);
+	}
+
+	@Override
+	public int selectChatDetailNo(Chat c) {
+		return chatDao.selectChatDetailNo(c, sqlSession);
+	}
+
 
 }

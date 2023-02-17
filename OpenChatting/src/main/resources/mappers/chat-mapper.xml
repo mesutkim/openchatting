@@ -56,4 +56,37 @@
   		    BY
   		    	CHAT_NO DESC
   	</select>
+  	
+  	<!-- 첫번째 채팅 insert -->
+  	<insert id="insertFirstChat" parameterType="chat">
+  		INSERT
+		  INTO
+		  		CHAT_DETAIL
+		  		(
+		  		DETAIL_NO
+		  		,CHAT_NO
+		  		,USER_ID
+		  		,CONTENT
+		  		)
+		 VALUES
+		 		(
+		 		SEQ_DCNO.NEXTVAL
+		 		,#{chatNo}
+		 		,#{userId}
+		 		,#{content}
+		 		)
+  	</insert>
+  	
+  	<!-- 채팅 여부 검사 -->
+  	<select id="selectChatDetailStatus" resultType="_int" parameterType="chat">
+  		SELECT
+  				COUNT(*)
+  		  FROM
+  		  		CHAT_DETAIL
+  		 WHERE
+  		 		CHAT_NO = #{chatNo}
+  		   AND
+  		   		USER_ID = #{userId}
+  	</select>
+  	
 </mapper>

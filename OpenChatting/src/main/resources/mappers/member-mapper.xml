@@ -60,4 +60,6 @@
   		   AND
   		   		STATUS = 'N'
   	</select>
+  	
+  	
 </mapper>

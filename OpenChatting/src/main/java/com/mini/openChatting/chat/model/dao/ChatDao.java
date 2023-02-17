@@ -26,4 +26,12 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectChatList", null, rowBounds);
 	}
 
+	public int insertFirstChat(Chat c, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("chatMapper.insertFirstChat", c);
+	}
+
+	public int selectChatDetailStatus(Chat c, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("chatMapper.selectChatDetailStatus", c);
+	}
+
 }

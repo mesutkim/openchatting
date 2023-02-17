@@ -94,14 +94,13 @@
 					<button class="btn btn-secondary" style="height:70px"> 로그인 </button>
 				</div>
 			</div>
+		</form>
 			<div style="margin-left:50px; margin-bottom: 15px;">
 				<a href="#">아이디</a> / <a href="#">비밀번호 찾기</a>
 			</div>
-		</form>
 		</div>
 	</div>
 </div>
-
 <script>
 	$(function(){
 		$(document).on('click', '#logout', function(){
@@ -111,6 +110,7 @@
 		})
 	})
 </script>
+
 	
 </body>
 </html>

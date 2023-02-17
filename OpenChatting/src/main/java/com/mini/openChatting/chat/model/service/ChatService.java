@@ -6,8 +6,16 @@ import com.mini.openChatting.chat.model.vo.Chat;
 import com.mini.openChatting.common.model.vo.PageInfo;
 
 public interface ChatService {
+	
 	int insertChat(Chat c);
+	
 	int selectListCount();
+	
 	ArrayList<Chat> selectChatList(PageInfo pi);
-	int insertChatDetail(int cno);
+	
+	int insertFirstChat(Chat c);
+	
+	int selectChatDetailStatus(Chat c);
+	
+	int selectChatDetailNo(Chat c);
 }

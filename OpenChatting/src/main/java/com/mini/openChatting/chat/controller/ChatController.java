@@ -19,6 +19,7 @@ public class ChatController {
 	@Autowired
 	private ChatServiceImpl chatService;
 	
+	// 글 목록
 	@ResponseBody
 	@RequestMapping(value="list.ch", produces="appliction/json; charset=UTF-8")
 	public String ajaxDrawBoardList(@RequestParam(value="cPage", defaultValue="1") int currentPage,  ModelAndView mv) {
@@ -26,23 +27,30 @@ public class ChatController {
 		return new Gson().toJson(chatService.selectChatList(pi));
 	}
 	
-	@RequestMapping("detail.ch")
-	public ModelAndView selectChatDetail(ModelAndView mv, int cno) {
-		System.out.println(cno);
-		chatService.insertChatDetail(cno);
-		mv.setViewName("chat/chatDetailView");
-		return mv;
-	}
+	//글 작성 폼으로
 	@RequestMapping("enrollForm.ch")
 	public ModelAndView chatEnrollForm(ModelAndView mv) {
 		mv.setViewName("chat/chatEnrollForm");
 		return mv;
 	}
+	
+	//글 작성
 	@RequestMapping("insert.ch")
 	public ModelAndView insertChat(ModelAndView mv, Chat c) {
 		if(chatService.insertChat(c) > 0) {
 			mv.setViewName("redirect:/");
 		}
+		return mv;
+	}
+	
+	//첫번째 채팅 입력
+	@RequestMapping("insert.de")
+	public ModelAndView insertFirstChat(ModelAndView mv, Chat c) {
+		if(chatService.selectChatDetailStatus(c) == 0) {
+			chatService.insertFirstChat(c);
+			int DetailView = chatService.selectChatDetailNo(c);
+			chatService.selectChatDetailList(c);
+		};
 		return mv;
 	}
 }

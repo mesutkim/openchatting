@@ -1,5 +1,8 @@
 package com.mini.openChatting.member.controller;
 
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +10,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.mini.openChatting.member.model.service.MemberServiceImpl;
 import com.mini.openChatting.member.model.vo.Member;
 
 @Controller
-public class MemberController {
+public class MemberController extends TextWebSocketHandler{
 	
 	@Autowired
 	private MemberServiceImpl memberService;
@@ -43,7 +50,6 @@ public class MemberController {
 	
 	@RequestMapping("login.me")
 	public ModelAndView loginUser(Member m, ModelAndView mv, HttpSession session) {
-
 		Member loginUser = memberService.loginMember(m);
 		
 		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
