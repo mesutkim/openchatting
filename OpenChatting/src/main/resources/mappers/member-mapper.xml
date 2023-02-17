@@ -3,6 +3,61 @@
 "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper>
-  <cache-ref namespace=""/>
+<mapper namespace="memberMapper">
+	<resultMap type="member" id="memberResultSet">
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_PWD" property="userPwd"/>
+		<result column="NAME" property="name"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="DETAIL_ADDRESS" property="detailAddress"/>
+		<result column="BIRTH_DATE" property="birthDate"/>
+		<result column="EMAIL" property="email"/>
+	</resultMap>
+	
+	<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="member">
+		INSERT
+		  INTO
+		  		MEMBER
+		  		(
+		  		USER_ID
+		  		,USER_PWD
+		  		,NAME
+		  		,ADDRESS
+		  		,DETAIL_ADDRESS
+		  		,BIRTH_DATE
+		  		,GENDER
+		  		,EMAIL
+		  		)
+		VALUES
+				(
+				#{userId}
+				,#{userPwd}
+				,#{name}
+				,#{address}
+				,#{detailAddress}
+				,#{birthDate}
+				,#{gender}
+				,#{email}
+				)
+	</insert>
+  	
+  	<!-- 로그인 -->
+  	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
+  		SELECT
+  				USER_ID
+  				,USER_PWD
+  				,NAME
+  				,ADDRESS
+  				,DETAIL_ADDRESS
+  				,BIRTH_DATE
+  				,GENDER
+  				,EMAIL
+  		  FROM
+  		  		MEMBER
+  		 WHERE
+  		 		USER_ID = #{userId}
+  		   AND
+  		   		STATUS = 'N'
+  	</select>
 </mapper>

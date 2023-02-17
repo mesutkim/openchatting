@@ -19,7 +19,6 @@
 	</bean>	
 
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
-		<!-- SQL명령어 실행을 위한 도구에 대한 참조를 설정 -->
 		<constructor-arg ref="sqlSessionFactoryBean" />
 	</bean>		
 	
