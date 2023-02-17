@@ -29,7 +29,8 @@ public class ChatDao {
 	public int insertFirstChat(Chat c, SqlSessionTemplate sqlSession) {
 		return sqlSession.insert("chatMapper.insertFirstChat", c);
 	}
-
+	
+	
 	public int selectChatDetailStatus(Chat c, SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("chatMapper.selectChatDetailStatus", c);
 	}
