@@ -35,27 +35,6 @@
 		<div id="writeArea" style="margin-top : 30px">
 			<button class="btn btn-secondary btn-sm" id="write"> + </button>
 		</div>
-		
-		<div id="listArea">
-			<!--
-			<div class="oneContent displayFlex" style="display : flex; height:100px; margin-top : 20px;">
-				<div class="contentArea" style="width : 600px">
-					<div id="title" class="clickArea">
-						<h3>여긴 제목입니다 여러분</h3>
-					</div>
-					<div id="content" class="clickArea">
-						<p>여기에는 각종 내용이 들어갑니다 근데 뭐 어떻게 해야할지 모르겠네요</p>
-					</div>
-					<div id="writer">
-						작성자^^
-					</div>
-				</div>
- 				<div class="imgArea" style="width:90px; height:90px; padding : 5px;">
-					<image src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fimg.icons8.com%2Fcolor%2F480%2Fno-image.png&type=sc960_832" width="90" height="90">
-				</div>
-			</div>
-			-->
-		</div>
 	</div>
 	
 	<script>
@@ -74,6 +53,12 @@
 			});
 			$(document).on('click', '.notLogin', function(){
 				alert('로그인 후 이용 가능합니다.');
+			});
+			$(document).on('click', '#chatListBtn', function(){
+				location.href='list.de'
+			});
+			$(document).on('click', '#contentListBtn', function(){
+				location.href='list.ch'
 			});
 		})
 		
@@ -155,7 +140,7 @@
 									+		'<form action="" method="POST" class="chattingForm">'
 									+       	'<input type="hidden" class="chatNo"  name="chatNo" value="' + list[i].chatNo + '">'
 									+			'<input type="hidden" class="content" name="content">'
-									+			'<input type="hidden"  name="userId" value="' + ${loginUser.userId} + '">'
+									+			'<input type="hidden" name="userId" value="' + list[i].userId + '">'
 									+		'</form>'
 									+	'</div>'
 									+'</div>'

@@ -36,19 +36,26 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public int insertFirstChat(Chat c) {
-		return chatDao.insertFirstChat(c, sqlSession);
-	}
-
-	@Override
 	public int selectChatDetailStatus(Chat c) {
 		return chatDao.selectChatDetailStatus(c, sqlSession);
 	}
 
 	@Override
-	public int selectChatDetailNo(Chat c) {
-		return chatDao.selectChatDetailNo(c, sqlSession);
+	public int insertChatDetail(Chat c) {
+		return chatDao.insertChatDetail(c, sqlSession);
 	}
+
+	@Override
+	public int insertFirstChat(Chat c) {
+		return chatDao.insertFirstChat(c, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Chat> selectChatContent(Chat c) {
+		return chatDao.selectChatContent(c, sqlSession);
+	}
+
+	
 
 
 }

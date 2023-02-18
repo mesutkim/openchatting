@@ -6,9 +6,15 @@
 <mapper namespace="chatMapper">
 	<resultMap type="chat" id="chatResultSet">
 		<result column="CHAT_NO" property="chatNo"/>
+		<result column="DETAIL_NO" property="detailNo"/>
 		<result column="USER_ID" property="userId"/>
 		<result column="TITLE" property="title"/>
 		<result column="CONTENT" property="content"/>
+		<result column="USER_ID1" property="userId"/>
+		<result column="USER_ID2" property="userId2"/>
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
+		<result column="CREATE_DATE" property="createDate"/>
 	</resultMap>
 	
 	<!-- 채팅 만들기 -->
@@ -57,26 +63,6 @@
   		    	CHAT_NO DESC
   	</select>
   	
-  	<!-- 첫번째 채팅 insert -->
-  	<insert id="insertFirstChat" parameterType="chat">
-  		INSERT
-		  INTO
-		  		CHAT_DETAIL
-		  		(
-		  		DETAIL_NO
-		  		,CHAT_NO
-		  		,USER_ID
-		  		,CONTENT
-		  		)
-		 VALUES
-		 		(
-		 		SEQ_DCNO.NEXTVAL
-		 		,#{chatNo}
-		 		,#{userId}
-		 		,#{content}
-		 		)
-  	</insert>
-  	
   	<!-- 채팅 여부 검사 -->
   	<select id="selectChatDetailStatus" resultType="_int" parameterType="chat">
   		SELECT
@@ -86,7 +72,80 @@
   		 WHERE
   		 		CHAT_NO = #{chatNo}
   		   AND
-  		   		USER_ID = #{userId}
+  		   		USER_ID2 = #{userId2}
+  	</select>
+  	
+  	<!-- 채팅방 등록 -->
+  	<insert id="insertChatDetail" parameterType="chat">
+  		INSERT
+  		  INTO
+  		  		CHAT_DETAIL
+  		 		(
+  		 		DETAIL_NO
+  		 		,CHAT_NO
+  		 		,USER_ID1
+  		 		,USER_ID2
+  		 		)
+  		 VALUES
+  		 		(
+  		 		SEQ_DNO.NEXTVAL
+  		 		,#{chatNo}
+  		 		,#{userId}
+  		 		,#{userId2}
+  		 		)
+  	</insert>
+  	
+  	<!-- 첫번째 채팅 insert -->
+  	<insert id="insertFirstChat" parameterType="chat">
+  		<selectKey resultType="_int" keyProperty="detailNo" order="BEFORE" >
+  			SELECT
+  					DETAIL_NO
+  			  FROM
+  			  		CHAT_DETAIL
+  			 WHERE
+  			 		CHAT_NO = #{chatNo}
+  			   AND
+  			   		USER_ID2 = #{userId2}
+  		</selectKey>
+  		INSERT
+		  INTO
+		  		CHAT_CONTENT
+		  		(
+		  		DETAIL_NO
+		  		,CHAT_NO
+		  		,USER_ID
+		  		,CONTENT
+		  		)
+		 VALUES
+		 		(
+		 		#{detailNo}
+		 		,#{chatNo}
+		 		,#{userId2}
+		 		,#{content}
+		 		)
+  	</insert>
+  	
+  	<select id="selectChatContent" parameterType="chat" resultMap="chatResultSet">
+  		SELECT
+  				DETAIL_NO
+  				,TITLE
+  				,A.CHAT_NO
+  				,A.USER_ID
+  				,A.CONTENT
+  				,ORIGIN_NAME
+  				,CHANGE_NAME
+  				,CREATE_DATE
+  		  FROM
+  		  		CHAT_CONTENT A
+  		  JOIN
+  		  		CHAT B ON (A.CHAT_NO = B.CHAT_NO)
+  		 WHERE
+  		 		A.CHAT_NO = #{chatNo}
+  		   AND
+  		   		A.USER_ID = #{userId2}
+  		 ORDER
+  		    BY
+  		    	CREATE_DATE ASC
   	</select>
   	
 </mapper>

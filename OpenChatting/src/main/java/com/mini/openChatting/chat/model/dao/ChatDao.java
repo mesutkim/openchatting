@@ -26,13 +26,20 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectChatList", null, rowBounds);
 	}
 
+	public int selectChatDetailStatus(Chat c, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("chatMapper.selectChatDetailStatus", c);
+	}
+
+	public int insertChatDetail(Chat c, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("chatMapper.insertChatDetail", c);
+	}
+
 	public int insertFirstChat(Chat c, SqlSessionTemplate sqlSession) {
 		return sqlSession.insert("chatMapper.insertFirstChat", c);
 	}
-	
-	
-	public int selectChatDetailStatus(Chat c, SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("chatMapper.selectChatDetailStatus", c);
+
+	public ArrayList<Chat> selectChatContent(Chat c, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("chatMapper.selectChatContent", c);
 	}
 
 }

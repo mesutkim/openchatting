@@ -66,54 +66,61 @@
 </style>
 </head>
 <body>
+	<jsp:include page="../common/header.jsp"/>
 	<div class="outer">
-	
 		<div>
-			<h3>여긴 채팅제목입니당</h3>
+			<h3>${ list[0].title }</h3>
 		</div>
 		
 		<div id="chatContent-area">
-			<!-- 남이 쓴 채팅 -->
-			<div id="chatAlign-other"> 
-	            <div style="width : 500px," class="align-left">
-	                <div style="width : 50px; margin-left: 5px;">
-	                    <img width="50px" height="50px" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fimg.icons8.com%2Fcolor%2F480%2Fno-image.png&type=sc960_832"> <!-- 이미지-->
-	                </div>
-	                <div style="max-width: 270px; margin-left: 5px;">
-	                    <div style="height : 20px">
-	                      	 아이디
-	                    </div>
-	                    <div class="speechBubble-other">
-	                    	<input type="hidden" value="0">
-	                    	<P>내용</P>
-						</div>	
-					</div>
-	                
-	            </div>
-				<div style="display: flex; align-content: flex-end; margin-left: 60px;">
-					<p style="margin-top: auto; margin-bottom: 0;">
-						<!-- 여긴 날짜 -->2000.01.01
-					</p>
-				</div>
-	        </div>
-	        <!-- 내가 쓴 채팅 -->
-	        <div id="chatAlign-mine" >
-					<div class="align-right">
-						<div style="max-width : 270px">
-							<div class="speechBubble-mine">
-								<input type="hidden" value="0">
-								<P>content</P>
+			<c:forEach items="${ list }" var="c">
+				<!-- 남이 쓴 채팅 -->
+				<c:if test="${ loginUser.userId != c.userId }">
+					<div id="chatAlign-other"> 
+			            <div style="width : 500px," class="align-left">
+			                <div style="width : 50px; margin-left: 5px;">
+			                    <img width="50px" height="50px" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fimg.icons8.com%2Fcolor%2F480%2Fno-image.png&type=sc960_832"> <!-- 이미지-->
+			                </div>
+			                <div style="max-width: 270px; margin-left: 5px;">
+			                    <div style="height : 20px">
+			                      	 ${ c.content }
+			                    </div>
+			                    <div class="speechBubble-other">
+			                    	<input type="hidden" value="0">
+			                    	<P>${ c.content }</P>
+								</div>	
+							</div>
+			                
+			            </div>
+						<div style="display: flex; align-content: flex-end; margin-left: 60px;">
+							<p style="margin-top: auto; margin-bottom: 0;">
+								${ c.createDate }
+							</p>
+						</div>
+			        </div>
+				</c:if>
+				
+		        <!-- 내가 쓴 채팅 -->
+		        <c:if test="${ loginUser.userId == c.userId }">
+			        <div id="chatAlign-mine" >
+						<div class="align-right">
+							<div style="max-width : 270px">
+								<div class="speechBubble-mine">
+									<input type="hidden" value="0">
+									<P>${ c.content }</P>
+								</div>
+							</div>
+						</div>
+						<div class="align-right">
+							<div style="display: flex; align-content: flex-end; margin-right: 5px;">
+								<p style="margin-top: auto; margin-bottom: 0;">
+									${ c.createDate }
+								</p>
 							</div>
 						</div>
 					</div>
-					<div class="align-right">
-						<div style="display: flex; align-content: flex-end; margin-right: 5px;">
-							<p style="margin-top: auto; margin-bottom: 0;">
-								<!-- 여긴 날짜 -->2000.01.01
-							</p>
-						</div>
-					</div>
-				</div>
+			</c:if>
+			</c:forEach>
 		</div>
 		
 		<div class="align-left" style="margin-top : 20px;">

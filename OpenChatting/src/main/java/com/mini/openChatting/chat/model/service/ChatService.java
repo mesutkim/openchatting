@@ -13,9 +13,11 @@ public interface ChatService {
 	
 	ArrayList<Chat> selectChatList(PageInfo pi);
 	
-	int insertFirstChat(Chat c);
-	
 	int selectChatDetailStatus(Chat c);
 	
-	int selectChatDetailNo(Chat c);
+	int insertChatDetail(Chat c);
+	
+	int insertFirstChat(Chat c);
+	
+	ArrayList<Chat> selectChatContent(Chat c);
 }

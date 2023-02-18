@@ -40,7 +40,7 @@ public class MemberController extends TextWebSocketHandler{
 		m.setUserPwd(encPwd);
 		if(memberService.insertMember(m) > 0) {
 			mv.addObject("alertMsg", "회원가입 성공!");
-			mv.setViewName("redirect:/");
+			mv.setViewName("main");
 		}else {
 			mv.addObject("errorMsg", "가입 실패");
 			mv.setViewName("common/errorPage");
@@ -55,10 +55,10 @@ public class MemberController extends TextWebSocketHandler{
 		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
 			session.setAttribute("loginUser", loginUser);
 			mv.addObject("alertMsg", loginUser.getUserId() + " 님 로그인 되셨습니다.");
-			mv.setViewName("redirect:/");
+			mv.setViewName("main");
 		} else {
 			mv.addObject("alertMsg", "아이디, 비밀번호를 확인해주세요.");
-			mv.setViewName("redirect:/");
+			mv.setViewName("main");
 		}
 		return mv;
 	}

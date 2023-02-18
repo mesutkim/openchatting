@@ -61,7 +61,22 @@
 			</c:if>
 		</div>
 	</div>
+	
 	<hr>
+	<ul class="nav justify-content-center" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link" id="contentListBtn">글 목록</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" id="chatListBtn">채팅 목록</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" id="">Menu 2</a>
+		</li>
+	</ul>
+	<hr>
+
+
 	
 	<!-- 로그인 모달창 -->
 <div class="modal" id="login">

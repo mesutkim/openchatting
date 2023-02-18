@@ -1,5 +1,7 @@
 package com.mini.openChatting.chat.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import com.mini.openChatting.chat.model.service.ChatServiceImpl;
 import com.mini.openChatting.chat.model.vo.Chat;
 import com.mini.openChatting.common.model.vo.PageInfo;
 import com.mini.openChatting.common.template.Pagination;
+import com.mini.openChatting.member.model.vo.Member;
 
 @Controller
 public class ChatController {
@@ -45,12 +48,19 @@ public class ChatController {
 	
 	//첫번째 채팅 입력
 	@RequestMapping("insert.de")
-	public ModelAndView insertFirstChat(ModelAndView mv, Chat c) {
-		if(chatService.selectChatDetailStatus(c) == 0) {
+	public ModelAndView insertFirstChat(ModelAndView mv, Chat c, HttpSession session) {
+		c.setUserId2(((Member)session.getAttribute("loginUser")).getUserId());
+		System.out.println(c);
+		if (chatService.selectChatDetailStatus(c) == 0) {
+			chatService.insertChatDetail(c);
 			chatService.insertFirstChat(c);
-			int DetailView = chatService.selectChatDetailNo(c);
-			chatService.selectChatDetailList(c);
+			
+		} else {
+			chatService.insertFirstChat(c);
 		};
+		mv.addObject("list", chatService.selectChatContent(c))
+		.setViewName("chat/chatDetailView");
 		return mv;
 	}
+	
 }
