@@ -148,4 +148,65 @@
   		    	CREATE_DATE ASC
   	</select>
   	
+  	<select id="selectDetailNoList" parameterType="chat" resultMap="chatResultSet">
+  		SELECT
+		        DETAIL_NO
+		  FROM
+		        CHAT_DETAIL
+		 WHERE
+		        USER_ID1 = #{userId}
+		    OR
+		        USER_ID2 = #{userId}
+  	</select>
+  	
+  	<!-- order by createDate 해보기 -->
+  	<select id="selectChatDetailList" parameterType="arraylist" resultMap="chatResultSet">
+		<foreach collection="list" item="item" separator=" UNION ">
+		SELECT 
+		        *
+		  FROM
+		        (SELECT
+		                A.DETAIL_NO
+		                ,A.CHAT_NO
+		                ,B.USER_ID1
+		                ,B.USER_ID2
+		                ,A.CONTENT
+		                ,ORIGIN_NAME
+		                ,CHANGE_NAME
+		                ,CREATE_DATE
+		          FROM
+		                CHAT_CONTENT A
+		          JOIN
+		                CHAT_DETAIL B ON (A.DETAIL_NO = B.DETAIL_NO)
+		         WHERE	
+		                    A.DETAIL_NO = #{item.detailNo}
+		         ORDER
+		            BY
+		                CREATE_DATE DESC)
+		 WHERE 
+				        ROWNUM = 1
+		</foreach>
+  	</select>
+  	
+  	<select id="selectChatDetail" parameterType="_int" resultMap="chatResultSet">
+  		SELECT
+  				DETAIL_NO
+  				,TITLE
+  				,A.CHAT_NO
+  				,A.USER_ID
+  				,A.CONTENT
+  				,ORIGIN_NAME
+  				,CHANGE_NAME
+  				,CREATE_DATE
+  		  FROM
+  		  		CHAT_CONTENT A
+  		  JOIN
+  		  		CHAT B ON (A.CHAT_NO = B.CHAT_NO)
+  		 WHERE
+  		 		A.DETAIL_NO = #{detailNo}
+  		 ORDER
+  		    BY
+  		    	CREATE_DATE ASC
+  	</select>
+  	
 </mapper>

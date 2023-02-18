@@ -20,4 +20,10 @@ public interface ChatService {
 	int insertFirstChat(Chat c);
 	
 	ArrayList<Chat> selectChatContent(Chat c);
+	
+	ArrayList<Chat> selectDetailNoList(Chat c);
+	
+	ArrayList<Chat> selectChatDetailList(ArrayList<Chat> list);
+	
+	ArrayList<Chat> selectChatDetail(int cno);
 }

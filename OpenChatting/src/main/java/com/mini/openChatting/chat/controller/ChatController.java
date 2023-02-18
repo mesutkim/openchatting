@@ -1,5 +1,7 @@
 package com.mini.openChatting.chat.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +67,19 @@ public class ChatController {
 	
 	//채팅 목록
 	@RequestMapping("list.de")
-	public ModelAndView selectChatDetailList(ModelAndView mv) {
-		mv.setViewName("chat/chatDetailListView");
+	public ModelAndView selectChatDetailList(ModelAndView mv, Chat c) {
+		ArrayList<Chat> list = chatService.selectDetailNoList(c);
+		System.out.println(chatService.selectChatDetailList(list));
+		mv.addObject("list", chatService.selectChatDetailList(list))
+		.setViewName("chat/chatDetailListView");
+		return mv;
+	}
+	
+	//채팅 내용
+	@RequestMapping("detail.de")
+	public ModelAndView selectChatDetail(ModelAndView mv, HttpSession session , int cno) {
+		mv.addObject("list", chatService.selectChatDetail(cno))
+		.setViewName("chat/chatDetailView");
 		return mv;
 	}
 	

@@ -27,29 +27,60 @@
 
 	<div class="outer" style="width : 700px; margin : auto;">
 		<div id="listArea">
-			
+		<c:forEach items="${ list }" var="c">
+			<c:if test="${ loginUser.userId != c.userId }">
 			<div class="oneContent displayFlex">
 				<div clas="imgArea" style="width : 100px; height : 100px">
 				<img src="" width="90px" height="90px" style="margin:5px">
 				</div>
 				<div class="textArea" style="width:600px">
+					<input type="hidden" class="hiddenDetailNo" value="${c.detailNo}" name="detailNo">
 					<div class="upArea displayFlex" style="height : 40%;width :100%">
 						<div class="idArea" style="width:450px">
-							<p class="userId-p">유저 아이디</p>
+							<p class="userId-p">${ c.userId }</p>
 						</div>
 						<div class="dateArea" style="width:150px">
-							<p class="date-p">2000.00.00</p>
+							<p class="date-p">${ c.createDate }</p>
 						</div>
 					</div>
 					<div class="downArea" style="height : 60%;width :100%">
-						<p classs="content-p">이건내용</p>
+						<p classs="content-p">${ c.content }</p>
 					</div>
 				</div>
-				
 			</div>
-			
+			</c:if>
+			<c:if test="${ loginUser.userId != c.userId2 }">
+ 			<div class="oneContent displayFlex">
+				<div clas="imgArea" style="width : 100px; height : 100px">
+				<img src="" width="90px" height="90px" style="margin:5px">
+				</div>
+				<div class="textArea" style="width:600px">
+					<input type="hidden" class="hiddenDetailNo" value="${c.detailNo}" name="detailNo">
+					<div class="upArea displayFlex" style="height : 40%;width :100%">
+						<div class="idArea" style="width:450px">
+							<p class="userId-p">${ c.userId2 }</p>
+						</div>
+						<div class="dateArea" style="width:150px">
+							<p class="date-p">${ c.createDate }</p>
+						</div>
+					</div>
+					<div class="downArea" style="height : 60%;width :100%">
+						<p classs="content-p">${ c.content }</p>
+					</div>
+				</div>
+			</div>
+			</c:if>
+		</c:forEach>
 		</div>	
 	</div>
+	
+	<script>
+		$(function(){
+			$('.textArea').click(function(){
+				location.href='detail.de?cno='+ $(this).find('.hiddenDetailNo').val();
+			})
+		})
+	</script>
 
 </body>
 </html>

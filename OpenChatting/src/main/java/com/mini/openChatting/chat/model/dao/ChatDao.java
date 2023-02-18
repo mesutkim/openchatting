@@ -42,4 +42,16 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectChatContent", c);
 	}
 
+	public ArrayList<Chat> selectDetailNoList(Chat c, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("chatMapper.selectDetailNoList", c);
+	}
+
+	public ArrayList<Chat> selectChatDetailList(ArrayList<Chat> list, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("chatMapper.selectChatDetailList", list);
+	}
+
+	public ArrayList<Chat> selectChatDetail(int cno, SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("chatMapper.selectChatDetail", cno);
+	}
+
 }

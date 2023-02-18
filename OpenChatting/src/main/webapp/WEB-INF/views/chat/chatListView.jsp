@@ -36,6 +36,12 @@
 			<button class="btn btn-secondary btn-sm" id="write"> + </button>
 		</div>
 		
+		<c:if test="${ not empty loginUser }">
+			<form action="" method="POST" id="loginUserForm">
+				<input type="hidden" name="userId" value="${ loginUser.userId }">
+			</form>
+		</c:if>
+		
 		<div id="listArea">
 			<!--
 			<div class="oneContent displayFlex" style="display : flex; height:100px; margin-top : 20px;">
@@ -63,9 +69,6 @@
 			$(document).on('click', '.chattingBtn', function(){
 				$(this).next().find('.content').val(prompt('내용을 입력하세요'));
 				$(this).next().attr('action', 'insert.de').submit();
-				/* if(confirm('채팅하시겠습니까?')){
-					location.href='detail.ch?cno='+ $(this).next().val();
-				} */
 			});
 			
 			contentList();
@@ -75,9 +78,6 @@
 			});
 			$(document).on('click', '.notLogin', function(){
 				alert('로그인 후 이용 가능합니다.');
-			});
-			$(document).on('click', '#chatListBtn', function(){
-				location.href='list.de'
 			});
 			$(document).on('click', '#contentListBtn', function(){
 				contentList();
@@ -89,8 +89,6 @@
 	
 	<c:if test="${ empty loginUser }">>
 		<script>
-			$(function(){
-			})
 			function contentList(){
 				$.ajax({
 					url : "list.ch",
@@ -124,6 +122,10 @@
 	<c:if test="${ not empty loginUser}">
 		<script>
 			$(function(){
+				$(document).on('click', '#chatListBtn', function(){
+					console.log($('#loginUserForm'));
+					$('#loginUserForm').attr('action', 'list.de').submit();
+				});
 			})
 			function contentList(){
 				$.ajax({
