@@ -11,6 +11,7 @@
 	
 	<jsp:include page="chat/chatListView.jsp"/>
 	
+	
 	<!-- <hr>
 	
 	<button onclick="connect();">접속</button>
@@ -61,6 +62,5 @@
 	수신된 메시지가 출력될 영역
 	<div class="message-warp"> -->
 	
-	</div>
 </body>
 </html>

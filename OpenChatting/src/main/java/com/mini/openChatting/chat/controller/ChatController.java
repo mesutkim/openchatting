@@ -63,4 +63,11 @@ public class ChatController {
 		return mv;
 	}
 	
+	//채팅 목록
+	@RequestMapping("list.de")
+	public ModelAndView selectChatDetailList(ModelAndView mv) {
+		mv.setViewName("chat/chatDetailListView");
+		return mv;
+	}
+	
 }
