@@ -35,13 +35,6 @@
 		<div id="writeArea" style="margin-top : 30px">
 			<button class="btn btn-secondary btn-sm" id="write"> + </button>
 		</div>
-		
-		<c:if test="${ not empty loginUser }">
-			<form action="" method="POST" id="loginUserForm">
-				<input type="hidden" name="userId" value="${ loginUser.userId }">
-			</form>
-		</c:if>
-		
 		<div id="listArea">
 			<!--
 			<div class="oneContent displayFlex" style="display : flex; height:100px; margin-top : 20px;">
@@ -71,7 +64,7 @@
 				$(this).next().attr('action', 'insert.de').submit();
 			});
 			
-			contentList();
+			chatList();
 			
 			$(document).on('click', '#write', function(){
 				location.href='enrollForm.ch';
@@ -79,8 +72,8 @@
 			$(document).on('click', '.notLogin', function(){
 				alert('로그인 후 이용 가능합니다.');
 			});
-			$(document).on('click', '#contentListBtn', function(){
-				contentList();
+			$(document).on('click', '#chatListBtn', function(){
+				chatList();
 			});
 		})
 		
@@ -89,9 +82,9 @@
 	
 	<c:if test="${ empty loginUser }">>
 		<script>
-			function contentList(){
+			function chatList(){
 				$.ajax({
-					url : "list.ch",
+					url : "ajaxlist.ch",
 					success : function(list){
 						var value='';
 						for(var i in list){
@@ -121,15 +114,9 @@
 	</c:if>
 	<c:if test="${ not empty loginUser}">
 		<script>
-			$(function(){
-				$(document).on('click', '#chatListBtn', function(){
-					console.log($('#loginUserForm'));
-					$('#loginUserForm').attr('action', 'list.de').submit();
-				});
-			})
-			function contentList(){
+			function chatList(){
 				$.ajax({
-					url : "list.ch",
+					url : "ajaxlist.ch",
 					success : function(list){
 						var value='';
 						for(var i in list){

@@ -24,10 +24,18 @@ public class ChatController {
 	@Autowired
 	private ChatServiceImpl chatService;
 	
+	
+	// 글 목록  view로
+	@RequestMapping("list.ch")
+	public ModelAndView selectChatList(ModelAndView mv) {
+		mv.setViewName("chat/chatListView");
+		return mv;
+	}
+	
 	// 글 목록
 	@ResponseBody
-	@RequestMapping(value="list.ch", produces="appliction/json; charset=UTF-8")
-	public String ajaxDrawBoardList(@RequestParam(value="cPage", defaultValue="1") int currentPage,  ModelAndView mv) {
+	@RequestMapping(value="ajaxlist.ch", produces="appliction/json; charset=UTF-8")
+	public String ajaxSelectChatList(@RequestParam(value="cPage", defaultValue="1") int currentPage) {
 		PageInfo pi = Pagination.getPageInfo(chatService.selectListCount(), currentPage, 10, 7);
 		return new Gson().toJson(chatService.selectChatList(pi));
 	}
@@ -69,7 +77,6 @@ public class ChatController {
 	@RequestMapping("list.de")
 	public ModelAndView selectChatDetailList(ModelAndView mv, Chat c) {
 		ArrayList<Chat> list = chatService.selectDetailNoList(c);
-		System.out.println(chatService.selectChatDetailList(list));
 		mv.addObject("list", chatService.selectChatDetailList(list))
 		.setViewName("chat/chatDetailListView");
 		return mv;
@@ -83,4 +90,17 @@ public class ChatController {
 		return mv;
 	}
 	
+	//채팅 insert
+	@ResponseBody
+	@RequestMapping(value="insert.co", produces="appliction/json; charset=UTF-8")
+	public String ajaxInsertChatContent(Chat c) {
+		return new Gson().toJson(chatService.insertChatContent(c));
+	}
+	
+	//방금 쓴 채팅 select
+	@ResponseBody
+	@RequestMapping(value="select.co", produces="appliction/json; charset=UTF-8")
+	public String ajaxSelectChatContent(Chat c) {
+		return new Gson().toJson(chatService.selectLastChatContent(c));
+	}
 }

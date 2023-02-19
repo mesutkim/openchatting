@@ -38,6 +38,13 @@
 		</script>
 		<c:remove var="alertMsg" />
 	</c:if>
+	<!-- 로그인 아이디 정보 -->
+	<c:if test="${ not empty loginUser }">
+		<form action="" method="POST" id="loginUserForm">
+			<input type="hidden" name="userId" value="${ loginUser.userId }">
+		</form>
+	</c:if>
+	
 	<div class="outer" style="width:700px; margin : auto;">
 		<div class="displayFlex">
 			<div class="searchForm displayFlex" style="width : 400px; margin-top:25px; margin-left : 60px;">
@@ -65,10 +72,10 @@
 	<hr>
 	<ul class="nav justify-content-center" role="tablist">
 		<li class="nav-item">
-			<a class="nav-link" id="contentListBtn">글 목록</a>
+			<a class="nav-link" id="chatListBtn">글 목록</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" id="chatListBtn">채팅 목록</a>
+			<a class="nav-link" id="detailListBtn">채팅 목록</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" id="">Menu 2</a>
@@ -123,6 +130,12 @@
 				window.location.href='logout.me';
 			}
 		})
+		$(document).on('click', '#detailListBtn', function(){
+			$('#loginUserForm').attr('action', 'list.de').submit();
+		});
+		$(document).on('click', '#chatListBtn', function(){
+			location.href="list.ch";
+		});
 	})
 </script>
 

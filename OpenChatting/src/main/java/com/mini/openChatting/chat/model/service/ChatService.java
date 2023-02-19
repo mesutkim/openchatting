@@ -26,4 +26,8 @@ public interface ChatService {
 	ArrayList<Chat> selectChatDetailList(ArrayList<Chat> list);
 	
 	ArrayList<Chat> selectChatDetail(int cno);
+	
+	int insertChatContent(Chat c);
+	
+	Chat selectLastChatContent(Chat c);
 }

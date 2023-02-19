@@ -161,6 +161,10 @@
   	
   	<!-- order by createDate 해보기 -->
   	<select id="selectChatDetailList" parameterType="arraylist" resultMap="chatResultSet">
+		SELECT
+				*
+		  FROM
+				(		
 		<foreach collection="list" item="item" separator=" UNION ">
 		SELECT 
 		        *
@@ -186,13 +190,16 @@
 		 WHERE 
 				        ROWNUM = 1
 		</foreach>
+				)
+		ORDER BY
+				CREATE_DATE DESC
   	</select>
   	
   	<select id="selectChatDetail" parameterType="_int" resultMap="chatResultSet">
   		SELECT
   				DETAIL_NO
-  				,TITLE
   				,A.CHAT_NO
+  				,TITLE
   				,A.USER_ID
   				,A.CONTENT
   				,ORIGIN_NAME
@@ -207,6 +214,49 @@
   		 ORDER
   		    BY
   		    	CREATE_DATE ASC
+  	</select>
+  	
+  	<insert id="insertChatContent" parameterType="chat">
+  		INSERT
+  		  INTO
+  		  		CHAT_CONTENT
+  		  		(
+  		  		DETAIL_NO
+  		  		,CHAT_NO
+  		  		,USER_ID
+  		  		,CONTENT
+  		  		)
+  		VALUES
+  				(
+  				#{detailNo}
+  				,#{chatNo}
+  				,#{userId}
+  				,#{content}
+  				)
+  	</insert>
+  	
+  	<select id="selectLastChatContent" parameterType="chat" resultMap="chatResultSet">
+		SELECT
+				*
+		  FROM
+				(SELECT
+						DETAIL_NO
+						,USER_ID
+						,CONTENT
+						,ORIGIN_NAME
+						,CHANGE_NAME
+						,CREATE_DATE
+				  FROM
+				  		CHAT_CONTENT
+				 WHERE
+				 		DETAIL_NO = #{detailNo}
+				   AND
+				   		CONTENT = #{content}
+				  ORDER
+				     BY
+				        CREATE_DATE DESC)
+		 WHERE 
+				ROWNUM = 1
   	</select>
   	
 </mapper>

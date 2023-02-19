@@ -54,4 +54,12 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectChatDetail", cno);
 	}
 
+	public int insertChatContent(Chat c, SqlSessionTemplate sqlSession) {
+		return sqlSession.insert("chatMapper.insertChatContent", c);
+	}
+
+	public Chat selectLastChatContent(Chat c, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("chatMapper.selectLastChatContent", c);
+	}
+
 }

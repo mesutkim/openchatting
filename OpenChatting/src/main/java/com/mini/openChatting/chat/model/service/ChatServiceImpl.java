@@ -70,6 +70,16 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.selectChatDetail(cno, sqlSession);
 	}
 
+	@Override
+	public int insertChatContent(Chat c) {
+		return chatDao.insertChatContent(c, sqlSession);
+	}
+
+	@Override
+	public Chat selectLastChatContent(Chat c) {
+		return chatDao.selectLastChatContent(c, sqlSession);
+	}
+
 	
 
 

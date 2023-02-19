@@ -22,7 +22,6 @@ public class WebSocketServer extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 //		((Member)session.getAttributes().get("loginUser")).setWsSession(session.getId()); //로그인 한 유저에게 session의 id값 넣어주기
 		users.add(session);
-		System.out.println("사용자 접속 ! 현재 " + users.size() + "명");
 	}
 	
 	/*
@@ -35,7 +34,7 @@ public class WebSocketServer extends TextWebSocketHandler{
 	 */
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		//메시지를 모든 사용자에게 전송한(사용자 수만큼 반복)
+		//메시지를 모든 사용자에게 전송(사용자 수만큼 반복)
 		TextMessage newMessage = new TextMessage(message.getPayload()); //payload 필드에 있는 사용자가 실제로 보낸 내용 (본문)
 		
 		for(WebSocketSession ws : users) {
