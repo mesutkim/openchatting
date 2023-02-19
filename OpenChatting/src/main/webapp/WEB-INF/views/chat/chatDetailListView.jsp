@@ -80,6 +80,62 @@
 				location.href='detail.de?cno='+ $(this).find('.hiddenDetailNo').val();
 			})
 		})
+		function selectDetailListView(){
+			var loginUser = '${ loginUser.userId }'
+			$.ajax({
+				url : 'ajaxList.de',
+				data : {
+					userId : loginUser
+				},
+				success : function(list){
+					var value ='';
+					for(var i in list){
+						if(loginUser != list[i].userId){
+							value += '<div class="oneContent displayFlex" style="margin-top : 15px; border-bottom : 1px solid lightgray">'
+									+	'<div clas="imgArea" style="width : 100px; height : 100px">'
+									+	'<img src="" width="90px" height="90px" style="margin:5px">'
+									+	'</div>'
+									+	'<div class="textArea" style="width:600px">'
+									+		'<input type="hidden" class="hiddenDetailNo" value="' + list[i].detailNo + '" name="detailNo">'
+									+		'<div class="upArea displayFlex" style="height : 40%;width :100%">'
+									+			'<div class="idArea" style="width:450px">'
+									+				'<p class="userId-p">' + list[i].userId + '</p>'
+									+			'</div>'
+									+			'<div class="dateArea" style="width:150px">'
+									+				'<p class="date-p">' + list[i].createDate + '</p>'
+									+			'</div>'
+									+		'</div>'
+									+		'<div class="downArea" style="height : 60%;width :100%">'
+									+			'<p classs="content-p">' + list[i].content + '</p>'
+									+		'</div>'
+									+	'</div>'
+									+ '</div>'
+						} else {
+							value += '<div class="oneContent displayFlex" style="margin-top : 15px; border-bottom : 1px solid lightgray">'
+								+		'<div clas="imgArea" style="width : 100px; height : 100px">'
+								+		'<img src="" width="90px" height="90px" style="margin:5px">'
+								+		'</div>'
+								+		'<div class="textArea" style="width:600px">'
+								+			'<input type="hidden" class="hiddenDetailNo" value="' + list[i].detailNo + '" name="detailNo">'
+								+			'<div class="upArea displayFlex" style="height : 40%;width :100%">'
+								+				'<div class="idArea" style="width:450px">'
+								+					'<p class="userId-p">' + list[i].userId2 + '</p>'
+								+				'</div>'
+								+				'<div class="dateArea" style="width:150px">'
+								+					'<p class="date-p">' + list[i].createDate + '</p>'
+								+				'</div>'
+								+			'</div>'
+								+			'<div class="downArea" style="height : 60%;width :100%">'
+								+				'<p classs="content-p">' + list[i].content + '</p>'
+								+			'</div>'
+								+		'</div>'
+								+	'</div>'
+						}
+						$('#listArea').html(value);
+					}
+				}
+			})
+		}
 	</script>
 
 </body>

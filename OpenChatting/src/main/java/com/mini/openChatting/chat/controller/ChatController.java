@@ -27,7 +27,8 @@ public class ChatController {
 	
 	// 글 목록  view로
 	@RequestMapping("list.ch")
-	public ModelAndView selectChatList(ModelAndView mv) {
+	public ModelAndView selectChatList(ModelAndView mv, HttpSession session) {
+		session.setAttribute("nowPage", "chatListView");
 		mv.setViewName("chat/chatListView");
 		return mv;
 	}
@@ -42,15 +43,17 @@ public class ChatController {
 	
 	//글 작성 폼으로
 	@RequestMapping("enrollForm.ch")
-	public ModelAndView chatEnrollForm(ModelAndView mv) {
+	public ModelAndView chatEnrollForm(ModelAndView mv, HttpSession session) {
+		session.setAttribute("nowPage", null);
 		mv.setViewName("chat/chatEnrollForm");
 		return mv;
 	}
 	
 	//글 작성
 	@RequestMapping("insert.ch")
-	public ModelAndView insertChat(ModelAndView mv, Chat c) {
+	public ModelAndView insertChat(ModelAndView mv, Chat c, HttpSession session) {
 		if(chatService.insertChat(c) > 0) {
+			session.setAttribute("nowPage", "chatListView");
 			mv.setViewName("redirect:/");
 		}
 		return mv;
@@ -67,6 +70,7 @@ public class ChatController {
 		} else {
 			chatService.insertFirstChat(c);
 		};
+		session.setAttribute("nowPage", "chatDetailView");
 		mv.addObject("list", chatService.selectChatContent(c))
 		.setViewName("chat/chatDetailView");
 		return mv;
@@ -74,16 +78,25 @@ public class ChatController {
 	
 	//채팅 목록
 	@RequestMapping("list.de")
-	public ModelAndView selectChatDetailList(ModelAndView mv, Chat c) {
+	public ModelAndView selectChatDetailList(ModelAndView mv, Chat c, HttpSession session) {
+		session.setAttribute("nowPage", "chatDetailListView");
 		ArrayList<Chat> list = chatService.selectDetailNoList(c);
 		mv.addObject("list", chatService.selectChatDetailList(list))
 		.setViewName("chat/chatDetailListView");
 		return mv;
 	}
+	//채팅 목록 ajax
+	@ResponseBody
+	@RequestMapping(value="ajaxList.de", produces="appliction/json; charset=UTF-8")
+	public String ajaxSelectChatDetailList(Chat c) {
+		System.out.println(c);
+		return new Gson().toJson(chatService.selectChatDetailList(chatService.selectDetailNoList(c)));
+	}
 	
 	//채팅 내용
 	@RequestMapping("detail.de")
 	public ModelAndView selectChatDetail(ModelAndView mv, HttpSession session , int cno) {
+		session.setAttribute("nowPage", "chatDetailView");
 		mv.addObject("list", chatService.selectChatDetail(cno))
 		.setViewName("chat/chatDetailView");
 		return mv;

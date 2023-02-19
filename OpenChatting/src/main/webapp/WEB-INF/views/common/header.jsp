@@ -137,8 +137,37 @@
 			location.href="list.ch";
 		});
 	})
+	
 </script>
+<c:if test="${ not empty loginUser }">
+	<script>
+	$(function(){
+		connect();
+	})
+	var socket;
+	var nowPage = '${ nowPage }';
+	function connect(){
+		
+		var uri = ' ws://localhost:8683/openChatting/chat';
+		socket = new WebSocket(uri);
 
+		socket.onopen = function(){ 
+			console.log('서버연결');
+		};
+		socket.onmessage = function(e){
+			var e = e.data
+			if( nowPage == 'chatDetailView' ){
+				selectChatDetail(e);
+			}
+			if( nowPage == 'chatDetailListView'){
+				selectDetailListView();
+			}
+			
+		};
+	};
+		
+	</script>
+</c:if>
 	
 </body>
 </html>

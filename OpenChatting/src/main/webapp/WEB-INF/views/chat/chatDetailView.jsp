@@ -132,7 +132,6 @@
 	
 	<script>
 		$(function(){
-			connect();
 			scrollDown();
 			$('#chatContent-input').keyup(function(key){
 		        if(key.keyCode==13) {
@@ -143,83 +142,68 @@
 		function scrollDown(){
 			$("#chatContent-area").scrollTop($("#chatContent-area")[0].scrollHeight);
 		}
+		
+		function selectChatDetail(e){
 			
-		//웹소켓	
-		var socket;
-		function connect(){
+			var detailNo = ${ list[0].detailNo };
 			
-			var uri = ' ws://localhost:8683/openChatting/chat';
-			socket = new WebSocket(uri);
-	
-			socket.onopen = function(){ 
-				console.log('서버연결');
-			}
-			socket.onclose = function(){
-				console.log('연결 종료');
-			}
-			socket.onerror = function(e){
-				console.log('서버와 연결중 오류 발생');
-			}
-			socket.onmessage = function(e){
-				var detailNo = ${ list[0].detailNo };
-				$.ajax({
-					url : "select.co",
-					data : {
-						content : e.data, //입력된 내용
-						detailNo : detailNo
-					},
-					success : function(c){
-						var value = '';
-						if(c.detailNo == detailNo){ //전달된 메세지가 이 채팅방의 메세지 일 경우
-							if('${loginUser.userId}' == c.userId){//내가 쓴 채팅
-								value = '<div id="chatAlign-mine" >'
-									  +		'<div class="align-right">'
-									  +			'<div style="max-width : 270px">'
-									  +				'<div class="speechBubble-mine">'
-									  +					'<P>' + c.content + '</P>'
-									  +				'</div>'
-									  +			'</div>'
-									  +		'</div>'
-									  +		'<div class="align-right">'
-									  +			'<div style="display: flex; align-content: flex-end; margin-right: 5px;">'
-									  +				'<p style="margin-top: auto; margin-bottom: 0;">'
-									  +					c.createDate
-									  +				'</p>'
-									  +			'</div>'
-									  +		'</div>'
-									  +	'</div>'
-							
-							}else{ //상대방이 쓴 채팅
-								value = '<div id="chatAlign-other">'
-								      + 	'<div style="width : 500px," class="align-left">'
-								      + 		'<div style="width : 50px; margin-left: 5px;">'
-								      + 			'<img width="50px" height="50px" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fimg.icons8.com%2Fcolor%2F480%2Fno-image.png&type=sc960_832"> <!-- 이미지-->'
-								      + 		'</div>'
-								      + 		'<div style="max-width: 270px; margin-left: 5px;">'
-								      + 			'<div style="height : 20px">'
-								      +                	 c.userId
-								      + 			'</div>'
-								      + 			'<div class="speechBubble-other">'
-								      + 				'<P>' + c.content +'</P>'
-									  +				'</div>'
-									  +			'</div>'
-								      + 	'</div>'
-									  +		'<div style="display: flex; align-content: flex-end; margin-left: 60px;">'
-									  +			'<p style="margin-top: auto; margin-bottom: 0;">'
-									  +				c.createDate
-									  +			'</p>'
-									  + 	'</div>'
-								      + '</div>'
-							}
+			$.ajax({
+				url : "select.co",
+				data : {
+					content : e, //입력된 내용
+					detailNo : detailNo
+				},
+				success : function(c){
+					var value = '';
+					if(c.detailNo == detailNo){ //전달된 메세지가 이 채팅방의 메세지 일 경우
+						if('${loginUser.userId}' == c.userId){//내가 쓴 채팅
+							value = '<div id="chatAlign-mine" class="align-right">'
+								  +		'<div style="width : 100%," class="align-left">'
+								  +			'<div style="max-width : 270px">'
+								  +				'<div class="speechBubble-mine">'
+								  +					'<P>' + c.content + '</P>'
+								  +				'</div>'
+								  +			'</div>'
+								  +		'</div>'
+								  +		'<div class="align-right">'
+								  +			'<div style="display: flex; align-content: flex-end; margin-right: 5px;">'
+								  +				'<p style="margin-top: auto; margin-bottom: 0;">'
+								  +					c.createDate
+								  +				'</p>'
+								  +			'</div>'
+								  +		'</div>'
+								  +	'</div>'
+						
+						}else{ //상대방이 쓴 채팅
+							value = '<div id="chatAlign-other">'
+							      + 	'<div style="width : 500px," class="align-left">'
+							      + 		'<div style="width : 50px; margin-left: 5px;">'
+							      + 			'<img width="50px" height="50px" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fimg.icons8.com%2Fcolor%2F480%2Fno-image.png&type=sc960_832"> <!-- 이미지-->'
+							      + 		'</div>'
+							      + 		'<div style="max-width: 270px; margin-left: 5px;">'
+							      + 			'<div style="height : 20px">'
+							      +                	 c.userId
+							      + 			'</div>'
+							      + 			'<div class="speechBubble-other">'
+							      + 				'<P>' + c.content +'</P>'
+								  +				'</div>'
+								  +			'</div>'
+								  +		'<div style="display: flex; align-content: flex-end; margin-left: 10px;">'
+								  +			'<p style="margin-top: auto; margin-bottom: 0;">'
+								  +				c.createDate
+								  +			'</p>'
+								  + 	'</div>'
+							      + 	'</div>'
+							      + '</div>'
 						}
-						$('#chatContent-area').html($('#chatContent-area').html() + value);
-						scrollDown();
 					}
-				});
+					$('#chatContent-area').html($('#chatContent-area').html() + value);
+					scrollDown();
+				}
+			});
+		}	
+		
 				
-			}
-				
-		}
 		function disconnect(){
 			socket.close();
 			

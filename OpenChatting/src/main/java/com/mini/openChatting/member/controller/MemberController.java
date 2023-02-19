@@ -60,6 +60,7 @@ public class MemberController extends TextWebSocketHandler{
 //			mv.addObject("alertMsg", "아이디, 비밀번호를 확인해주세요.");
 			mv.setViewName("redirect:/");
 		}
+		session.setAttribute("nowPage", "chatListView");
 		return mv;
 	}
 	@RequestMapping("logout.me")
