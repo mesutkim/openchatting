@@ -60,7 +60,6 @@ public class ChatController {
 	@RequestMapping("insert.de")
 	public ModelAndView insertFirstChat(ModelAndView mv, Chat c, HttpSession session) {
 		c.setUserId2(((Member)session.getAttribute("loginUser")).getUserId());
-		System.out.println(c);
 		if (chatService.selectChatDetailStatus(c) == 0) {
 			chatService.insertChatDetail(c);
 			chatService.insertFirstChat(c);

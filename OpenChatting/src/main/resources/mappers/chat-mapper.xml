@@ -241,6 +241,7 @@
 		  FROM
 				(SELECT
 						DETAIL_NO
+						,CHAT_NO
 						,USER_ID
 						,CONTENT
 						,ORIGIN_NAME

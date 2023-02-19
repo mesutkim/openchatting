@@ -29,7 +29,7 @@
 		<div id="listArea">
 		<c:forEach items="${ list }" var="c">
 			<c:if test="${ loginUser.userId != c.userId }">
-			<div class="oneContent displayFlex">
+			<div class="oneContent displayFlex" style="margin-top : 15px; border-bottom : 1px solid lightgray">
 				<div clas="imgArea" style="width : 100px; height : 100px">
 				<img src="" width="90px" height="90px" style="margin:5px">
 				</div>
@@ -50,7 +50,7 @@
 			</div>
 			</c:if>
 			<c:if test="${ loginUser.userId != c.userId2 }">
- 			<div class="oneContent displayFlex">
+ 			<div class="oneContent displayFlex" style="margin-top : 15px; border-bottom : 1px solid lightgray">
 				<div clas="imgArea" style="width : 100px; height : 100px">
 				<img src="" width="90px" height="90px" style="margin:5px">
 				</div>
