@@ -76,7 +76,7 @@
 	
 	<script>
 		$(function(){
-			$('.textArea').click(function(){
+			$(document).on('click', '.textArea', function(){
 				location.href='detail.de?cno='+ $(this).find('.hiddenDetailNo').val();
 			})
 		})
