@@ -68,7 +68,7 @@
 
 	      		<div id="checkArea">
 		      		<input type="text" name="secret" id="secret" style="width : 255px" required class="inputText">
-		      		<button type="button" class="btn btn-secondary " id="checkKey" name="email" style="height : 36px" onclick="checkKey();">확인</button>
+		      		<button type="button" class="btn btn-secondary " id="secretCheck name="email" style="height : 36px" onclick="checkKey();">확인</button>
 	      		</div>
  	      		
  	      		<p id=checkText></p>
@@ -122,7 +122,6 @@
 		}
 	}
 	function checkKey(){
-		
 		$.ajax({
 			url : 'checkKey.me',
 			type : 'post',
@@ -131,6 +130,7 @@
 			},
 			success : function(result){
 				if(result > 0){
+					clearInterval(interval); //인터벌 종료
 					$('#checkText').text('인증되었습니다.');
 					$('#email').attr('readonly', true);
 					$('#checkArea').hide();
@@ -140,15 +140,12 @@
 			}
 		})
 	}
-	
+	var interval;
 	function countdown(){
 		var min = 3;
-		var sec = 0;
-		var interval = setInterval(function(){
-			if(sec < 10){
-				sec = '0' + sec;
-			}
-			
+		var sec = 00;
+		interval = setInterval(function(){
+			console.log('???');
 			
 			if(sec == '00' && min != 0){
 				min--;
@@ -158,13 +155,17 @@
 				sec--;
 			}
 			
+			if(sec < 10){
+				sec = '0' + sec;
+			}
+			
 			$('#checkText').text('남은 시간  : ' + min + ':' + sec);
 			
 			if(sec == '00' && min == 0){
 				clearInterval(interval);
 				deleteEndKey();
 				$('#checkText').text('메일 주소를 확인하고 다시 인증해 주세요');
-				$('#secret').value('');
+				$('#secret').val('');
 				$('#mailCheck').attr('disabled', false);
 				$('#checkArea').hide();
 			} 
