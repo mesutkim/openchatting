@@ -159,7 +159,6 @@
 		        USER_ID2 = #{userId}
   	</select>
   	
-  	<!-- order by createDate 해보기 -->
   	<select id="selectChatDetailList" parameterType="arraylist" resultMap="chatResultSet">
 		SELECT
 				*

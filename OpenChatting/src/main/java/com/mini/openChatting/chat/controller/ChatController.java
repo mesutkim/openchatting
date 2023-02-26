@@ -89,7 +89,6 @@ public class ChatController {
 	@ResponseBody
 	@RequestMapping(value="ajaxList.de", produces="appliction/json; charset=UTF-8")
 	public String ajaxSelectChatDetailList(Chat c) {
-		System.out.println(c);
 		return new Gson().toJson(chatService.selectChatDetailList(chatService.selectDetailNoList(c)));
 	}
 	
