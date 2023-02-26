@@ -105,6 +105,7 @@
 	})
 	function checkEmail(){
 		if($('#email').val() != ''){
+			$('#email').attr('readonly', true);
 			$('#mailCheck').attr('disabled', true);
 			$.ajax({
 				url : 'insertKey.me',
