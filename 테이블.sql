@@ -77,6 +77,14 @@ COMMENT ON COLUMN CHAT_CONTENT.ORIGIN_NAME IS '원본파일이름';
 COMMENT ON COLUMN CHAT_CONTENT.CHANGE_NAME IS '바뀐파일이름';
 COMMENT ON COLUMN CHAT_CONTENT.CREATE_DATE IS '작성일';
 
+-- cert 테이블
+create table cert(
+	who varchar2(24),
+	secret varchar2(6),
+	when date not null,
+	primary key (who, secret)
+);
+
 CREATE SEQUENCE SEQ_CNO
        INCREMENT BY 1
        START WITH 1

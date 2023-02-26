@@ -61,5 +61,50 @@
   		   		STATUS = 'N'
   	</select>
   	
-  	
+  	<insert id="insertKey" parameterType="com.mini.openChatting.common.entity.CertVO">
+ 		INSERT
+ 		  INTO
+ 		  		CERT
+ 		  		(
+ 		  		WHO
+ 		  		,SECRET
+ 		  		,WHEN
+ 		  		)
+ 		 VALUES
+ 		 		(
+ 		 		#{who}
+ 		 		,#{secret}
+ 		 		,SYSDATE
+ 		 		)
+ 	</insert>
+ 	
+ 	<select id="selectCheckKey" resultType="_int" parameterType="com.mini.openChatting.common.entity.CertVO" >
+ 		SELECT
+ 				COUNT(*)
+ 		  FROM
+ 		  		CERT
+ 		 WHERE
+ 		 		WHO = #{who}
+ 		   AND
+ 		   		SECRET = #{secret}
+ 		   AND
+ 		   		WHEN BETWEEN SYSDATE - 3/24/60 AND SYSDATE		
+ 	</select>
+ 	
+ 	<delete id="deleteCheckKey" parameterType="com.mini.openChatting.common.entity.CertVO" >
+ 		DELETE 
+ 				CERT 
+ 		 WHERE 
+ 		 		WHO = #{who}
+ 		   AND
+ 		   		SECRET = #{secret}
+ 	</delete>
+ 	
+ 	<delete id="deleteOldKey" parameterType="com.mini.openChatting.common.entity.CertVO">
+ 		DELETE 
+ 				CERT 
+ 		 WHERE 
+ 		 		WHO = #{who}
+ 	</delete>
+ 	
 </mapper>
