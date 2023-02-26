@@ -145,8 +145,6 @@
 		var min = 3;
 		var sec = 00;
 		interval = setInterval(function(){
-			console.log('???');
-			
 			if(sec == '00' && min != 0){
 				min--;
 				sec = 59;
